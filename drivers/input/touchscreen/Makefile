@@ -106,9 +106,3 @@ obj-$(CONFIG_TOUCHSCREEN_SYNAPTICS_DSX_TD4322) += synaptics_dsx_td4322/
 #Qicai.gu@EXP.BSP.TP, 2019-11-20, Add for common touchpanel driver
 subdir-ccflags-$(CONFIG_TOUCHPANEL_OPPO) += -I$(srctree)/drivers/misc/mediatek/include
 #endif /* VENDOR_EDIT */
-
-#ifdef VENDOR_EDIT
-#ZhongWenjie@EXP.BSP.TP, 2018-11-12, Add for common touchpanel driver
-obj-$(CONFIG_TOUCHPANEL_OPPO) += oppo_touchscreen/
-obj-$(CONFIG_TOUCHPANEL_OPPO) += touch.o
-#endif /* VENDOR_EDIT */

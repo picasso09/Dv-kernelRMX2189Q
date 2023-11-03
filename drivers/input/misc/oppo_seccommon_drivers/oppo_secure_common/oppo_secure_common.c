@@ -28,7 +28,7 @@
 #include <linux/module.h>
 #include <linux/proc_fs.h>
 
-#if CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6763 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6771 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6779 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6785 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6768 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6765
+#if CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6763 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6771 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6779 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6785 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6768 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6885
 #include <sec_boot_lib.h>
 #include <linux/uaccess.h>
 #elif CONFIG_OPPO_BSP_SECCOM_PLATFORM == 855 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6125 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 7150 \
@@ -36,12 +36,14 @@
 #include <linux/soc/qcom/smem.h>
 #else
 #include <linux/soc/qcom/smem.h>
+#include <linux/uaccess.h>
 #endif
 
 #include <linux/slab.h>
 #include <linux/seq_file.h>
 #include <linux/fs.h>
 #include <linux/of_gpio.h>
+#include <linux/uaccess.h>
 
 #if CONFIG_OPPO_BSP_SECCOM_PLATFORM == 855 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6125 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 7150 \
 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 7250 || CONFIG_OPPO_BSP_SECCOM_PLATFORM == 8250
@@ -105,7 +107,7 @@ static char* oppo_secure_common_dir_name = "oppo_secure_common";
 static struct secure_data *secure_data_ptr = NULL;
 static char g_fuse_value[FUSE_VALUE_LEN] = UNKNOW_FUSE_VALUE ;
 
-secure_type_t get_secureType(void)
+static secure_type_t get_secureType(void)
 {
         secure_type_t secureType = SECURE_BOOT_UNKNOWN;
 
@@ -204,14 +206,6 @@ secure_type_t get_secureType(void)
 		}
 
 #elif CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6768
-
-				if (g_hw_sbcen == 0) {
-						secureType = SECURE_BOOT_OFF;
-				} else {
-						secureType = SECURE_BOOT_ON;
-				}
-
-#elif CONFIG_OPPO_BSP_SECCOM_PLATFORM == 6765
 
 				if (g_hw_sbcen == 0) {
 						secureType = SECURE_BOOT_OFF;
