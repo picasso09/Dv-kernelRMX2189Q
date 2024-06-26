@@ -100,7 +100,7 @@ static int mt65xx_led_set_cust(struct cust_mt65xx_led *cust, int level);
 #ifdef CONTROL_BL_TEMPERATURE
 
 /* define int limit for brightness limitation */
-static unsigned int limit = 255;
+static unsigned int limit = 2047;
 static unsigned int limit_flag;
 static unsigned int last_level;
 static unsigned int current_level;
@@ -138,7 +138,7 @@ int setMaxbrightness(int max_level, int enable)
 		}
 	} else {
 		limit_flag = 0;
-		limit = 255;
+		limit = 2047;
 		mutex_unlock(&bl_level_limit_mutex);
 
 		if (current_level != 0) {
@@ -168,7 +168,7 @@ int setMaxbrightness(int max_level, int enable)
 //wu.weihong@ODM_WT.MM.Display.Lcd, 2020/4/8, LCD backlight switch 8bit to 11bit
 		disp_bls_set_max_backlight(LED_2047);
 #else
-		disp_bls_set_max_backlight(LED_FULL);
+		disp_bls_set_max_backlight(LED_2047);
 #endif
 		#endif
 #endif
@@ -348,8 +348,8 @@ int mt65xx_leds_brightness_set(enum mt65xx_led_type type,
 	if (type < 0 || type >= MT65XX_LED_TYPE_TOTAL)
 		return -1;
 
-	if (level > LED_FULL)
-		level = LED_FULL;
+	if (level > LED_2047)
+		level = LED_2047;
 	else if (level < 0)
 		level = 0;
 
@@ -414,8 +414,8 @@ int backlight_brightness_set(int level)
 	else if (level < 0)
 		level = 0;
 #else
-	if (level > LED_FULL)
-		level = LED_FULL;
+	if (level > LED_2047)
+		level = LED_2047;
 	else if (level < 0)
 		level = 0;
 #endif
@@ -762,7 +762,7 @@ static int mt65xx_leds_probe(struct platform_device *pdev)
 #ifdef CONTROL_BL_TEMPERATURE
 
 	last_level = 0;
-	limit = 255;
+	limit = 2047;
 	limit_flag = 0;
 	current_level = 0;
 	LEDS_DRV_DEBUG
